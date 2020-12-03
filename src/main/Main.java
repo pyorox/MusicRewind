@@ -140,8 +140,8 @@ public class Main {
 				//fileChooser.set
 				int result = fileChooser.showOpenDialog(frmmusicrewind);
 				if (result == JFileChooser.APPROVE_OPTION) {
-				    File selectedFile = fileChooser.getSelectedFile();
-				    textFieldPath.setText(selectedFile.getAbsolutePath());
+					File selectedFile = fileChooser.getSelectedFile();
+					textFieldPath.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
@@ -170,14 +170,15 @@ public class Main {
 		JSONArray jsonArray = null;
 		try {
 			String content = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
-	        jsonArray = new JSONArray(content);
+			jsonArray = new JSONArray(content);
 		} catch(Exception e) {
 			return "ERROR: Something went wrong while loading the history JSON file:\n" + e.toString();
 		}
 		
 		ArrayList<Artist> artists = new ArrayList<Artist>();
 		ArrayList<Song> songs = new ArrayList<Song>();
-		long totalSongs = 0;
+		//this ended up not being used
+		//long totalSongs = 0;
 		
 		//process the JSON array
 		for(int i=0; i < jsonArray.length(); i++) {
@@ -194,6 +195,8 @@ public class Main {
 						try {
 							//get rid of the "Watched" part of the title to get the actual name of the song
 							String song = title.replace("Watched ", "");
+							
+							//get the artist name, similarly getting rid of the " - Topic" part of the subtitles.name field
 							JSONObject subtitles = jsonObject.getJSONArray("subtitles").getJSONObject(0);
 							String artist = subtitles.getString("name").replace(" - Topic", "");
 							
@@ -218,7 +221,7 @@ public class Main {
 							else {
 								songs.add(s);
 							}
-							totalSongs++;
+							//totalSongs++;
 						} catch(Exception e) {
 							//JSON entry doesn't have song or artist name so we'll just quietly skip it
 						}
@@ -229,22 +232,22 @@ public class Main {
 		
 		//sort lists in decreasing order
 		Collections.sort(artists, new Comparator<Artist>() {
-		    public int compare(Artist left, Artist right)  {
-		        return right.getCount() - left.getCount();
-		    }
+			public int compare(Artist left, Artist right) {
+			return right.getCount() - left.getCount();
+			}
 		});
 		
 		Collections.sort(songs, new Comparator<Song>() {
-		    public int compare(Song left, Song right)  {
-		        return right.getCount() - left.getCount();
-		    }
+			public int compare(Song left, Song right) {
+				return right.getCount() - left.getCount();
+			}
 		});
 		
 		//generate HTML code
 		//this block generates all the CSS and the table headers
 		String out = "<html>\n<head>\n<title>#YTMusicRewind</title>\n" +
 		"<style type=\"text/css\">\n" +
-		".tg  {border-collapse:collapse;border-spacing:0;background-color:#212121;color:white;}\n" +
+		".tg {border-collapse:collapse;border-spacing:0;background-color:#212121;color:white;}\n" +
 		".tg td{border-style:hidden;font-family:Segoe UI, Helvetica, Arial, sans-serif;font-size:14px;" +
 		"font-weight:bold;overflow:hidden;padding:5px 50px;word-break:normal;}\n" +
 		".tg th{border-style:hidden;font-family:Segoe UI, Helvetica, Arial, sans-serif;font-size:14px;" +
