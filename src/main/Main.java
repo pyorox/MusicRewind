@@ -16,8 +16,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,6 +26,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -137,7 +136,6 @@ public class Main {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-				//fileChooser.set
 				int result = fileChooser.showOpenDialog(frmmusicrewind);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
@@ -245,7 +243,7 @@ public class Main {
 		
 		//generate HTML code
 		//this block generates all the CSS and the table headers
-		String out = "<html>\n<head>\n<title>#YTMusicRewind</title>\n" +
+		String out = "<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>#YTMusicRewind</title>\n" +
 		"<style type=\"text/css\">\n" +
 		".tg {border-collapse:collapse;border-spacing:0;background-color:#212121;color:white;}\n" +
 		".tg td{border-style:hidden;font-family:Segoe UI, Helvetica, Arial, sans-serif;font-size:14px;" +
@@ -316,7 +314,9 @@ public class Main {
 		//write the generated HTML to a file and open it in the user's default browser
 		try {
 			File f = new File("MusicRewind.html");
-			FileUtils.writeStringToFile(f, out, Charsets.UTF_8);
+			PrintWriter p = new PrintWriter(f, "UTF-8");
+			p.print(out);
+			p.close();
 			Desktop.getDesktop().open(f);
 		} catch (IOException e) {
 			return "ERROR: Something went wrong while writing the output file:\n" + e.toString();

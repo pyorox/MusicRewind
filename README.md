@@ -28,4 +28,4 @@
  - When it comes to files uploaded by the user, the entries contain the name of the song but not the artist. So, in these cases, the artist is ignored.
 
 # Building
- If you want to build it yourself from the source code, you'll need the [JSON-Java](https://github.com/stleary/JSON-java) and [Apache Commons IO](https://commons.apache.org/proper/commons-io/download_io.cgi) packages.
+ If you want to build it yourself from the source code, you'll need the [JSON-Java](https://github.com/stleary/JSON-java) package.
