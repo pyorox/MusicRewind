@@ -1,5 +1,6 @@
 # MusicRewind
- Generates a summary of your top artists/songs streamed through YouTube Music (for those jealous of Spotify's "Wrapped" feature).
+ Generates a summary of your top artists/songs streamed through YouTube Music (for those jealous of Spotify's "Wrapped" feature).  
+ You may want to try the [JavaScript version](https://github.com/pyorox/MusicRewindJS) instead so you don't have to download my code and deal with Java.
 
 # Instructions
  **These instructions are kinda lengthy but you need to make sure to follow every step correctly**, otherwise this thing won't work. Please read everything carefully.
